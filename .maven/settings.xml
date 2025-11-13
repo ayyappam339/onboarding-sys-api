@@ -11,6 +11,11 @@
       <username>${nexus_username}</username>
       <password>${nexus_password}</password>
     </server>
+      <server>
+      <id>Repository</id>
+      <username>${env.USERNAME}</username>
+      <password>${env.PASSWORD}</password>
+    </server>
   </servers>
 
   <profiles>
