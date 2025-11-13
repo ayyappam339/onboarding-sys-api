@@ -5,10 +5,11 @@ on:
     branches: [ release-1125 ]
   pull_request:
     branches: [ release-1125 ]
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
@@ -27,19 +28,83 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
-      # 🔑 Add Maven settings with Anypoint Exchange credentials
+      # ✅ Create Maven settings.xml with Anypoint credentials
       - name: Configure Maven settings
         run: |
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
           <settings>
             <servers>
+              <server>
+                <id>Exchange2</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
+              <server>
+                <id>anypoint-exchange</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
               <server>
                 <id>anypoint-exchange-v3</id>
                 <username>${{ secrets.anypoint_platform_username }}</username>
                 <password>${{ secrets.anypoint_platform_password }}</password>
               </server>
+              <server>
+                <id>Repository</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
             </servers>
+
+            <pluginGroups>
+              <pluginGroup>org.mule.tools</pluginGroup>
+            </pluginGroups>
+
+            <profiles>
+              <profile>
+                <id>mule-extra-repos</id>
+                <activation>
+                  <activeByDefault>true</activeByDefault>
+                </activation>
+                <repositories>
+                  <repository>
+                    <id>mule-public</id>
+                    <url>https://repository.mulesoft.org/nexus/content/repositories/public</url>
+                  </repository>
+                </repositories>
+                <pluginRepositories>
+                  <pluginRepository>
+                    <id>mule-public</id>
+                    <url>https://repository.mulesoft.org/nexus/content/repositories/public</url>
+                  </pluginRepository>
+                </pluginRepositories>
+              </profile>
+
+              <profile>
+                <id>Mule</id>
+                <activation>
+                  <activeByDefault>true</activeByDefault>
+                </activation>
+                <repositories>
+                  <repository>
+                    <id>MuleRepository</id>
+                    <url>https://repository.mulesoft.org/nexus-ee/content/repositories/releases-ee/</url>
+                    <layout>default</layout>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                  </repository>
+                  <repository>
+                    <id>MuleRepositoryPublic</id>
+                    <url>https://repository.mulesoft.org/nexus/content/repositories/public</url>
+                    <layout>default</layout>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                  </repository>
+                </repositories>
+              </profile>
+            </profiles>
           </settings>
           EOF
 
@@ -53,7 +118,7 @@ jobs:
           artifactName2=$(echo "$artifactName1" | sed "s/.jar/-$commitHash.jar/")
           mv "$artifactName1" "$artifactName2"
 
-      - name: Upload artifact 
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
@@ -62,7 +127,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    steps:    
+
+    steps:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
@@ -78,15 +144,31 @@ jobs:
         with:
           name: artifacts
 
-      # 🔑 Add Maven settings for deploy phase too
+      # ✅ Configure Maven settings again for deploy
       - name: Configure Maven settings
         run: |
           mkdir -p ~/.m2
           cat > ~/.m2/settings.xml <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
           <settings>
             <servers>
               <server>
+                <id>Exchange2</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
+              <server>
+                <id>anypoint-exchange</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
+              <server>
                 <id>anypoint-exchange-v3</id>
+                <username>${{ secrets.anypoint_platform_username }}</username>
+                <password>${{ secrets.anypoint_platform_password }}</password>
+              </server>
+              <server>
+                <id>Repository</id>
                 <username>${{ secrets.anypoint_platform_username }}</username>
                 <password>${{ secrets.anypoint_platform_password }}</password>
               </server>
@@ -102,7 +184,7 @@ jobs:
         run: |
           artifactName=$(ls *.jar | head -1)
           mvn deploy -DskipMunitTests -DmuleDeploy \
-           -Dmule.artifact="$artifactName" \
-           -Danypoint.username="$USERNAME" \
-           -Danypoint.password="$PASSWORD" \
-           -Ddecryption.key="$KEY"
+            -Dmule.artifact="$artifactName" \
+            -Danypoint.username="$USERNAME" \
+            -Danypoint.password="$PASSWORD" \
+            -Ddecryption.key="$KEY"
