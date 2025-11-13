@@ -13,8 +13,8 @@
     </server>
       <server>
       <id>Repository</id>
-      <username>${env.USERNAME}</username>
-      <password>${env.PASSWORD}</password>
+      <username>ayyappam1125</username>
+      <password>Baahulya@467</password>
     </server>
   </servers>
 
