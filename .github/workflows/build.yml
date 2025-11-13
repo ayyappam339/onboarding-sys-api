@@ -10,8 +10,8 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      USERNAME: ${{ secrets.anypoint_platform_username }}
-      PASSWORD: ${{ secrets.anypoint_platform_password }}
+      ANYPOINT_USERNAME: ${{ secrets.anypoint_platform_username }}
+      ANYPOINT_PASSWORD: ${{ secrets.anypoint_platform_password }}
 
     steps:
       - name: Checkout code
@@ -33,7 +33,12 @@ jobs:
           commitHash=$(git rev-parse --short HEAD)
           newArtifact=$(echo $artifact | sed "s/.jar/-$commitHash.jar/")
           mv $artifact $newArtifact
-          echo "artifact=$newArtifact" >> $GITHUB_ENV
+          echo "ARTIFACT_PATH=$newArtifact" >> $GITHUB_ENV
 
       - name: Deploy to CloudHub
-        run: mvn mule:deploy -B -DskipMunitTests -Dmule.artifact=$artifact
+        run: |
+          echo "Deploying $ARTIFACT_PATH"
+          mvn mule:deploy -B -DskipMunitTests \
+            -Dmule.artifact=$ARTIFACT_PATH \
+            -Danypoint.username=$ANYPOINT_USERNAME \
+            -Danypoint.password=$ANYPOINT_PASSWORD
