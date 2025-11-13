@@ -42,3 +42,4 @@ jobs:
             -Dmule.artifact=$ARTIFACT_PATH \
             -Danypoint.username=$ANYPOINT_USERNAME \
             -Danypoint.password=$ANYPOINT_PASSWORD
+
