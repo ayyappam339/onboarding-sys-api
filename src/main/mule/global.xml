@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:snowflake="http://www.mulesoft.org/schema/mule/snowflake" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/snowflake http://www.mulesoft.org/schema/mule/snowflake/current/mule-snowflake.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<snowflake:snowflake-config name="Snowflake_Config" doc:name="Snowflake Config" doc:id="b7929edb-86b9-4909-8b37-eaf17c05aa40" >
+		<snowflake:snowflake-connection accountName="CPILAVT-PGC63790" warehouse="SNOWFLAKE_LEARNING_WH" database="EMPLOYEE" schema="PUBLIC" user="AYYAPPAM1025" password="MulesoftLearning@123" role="ACCOUNTADMIN" />
+	</snowflake:snowflake-config>
+	<api-gateway:autodiscovery apiId="20600712" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="56207135-9821-4f6c-bf19-11b893a51436" flowRef="emp-onborading-sys-api-main" />
+</mule>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:snowflake="http://www.mulesoft.org/schema/mule/snowflake" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/snowflake http://www.mulesoft.org/schema/mule/snowflake/current/mule-snowflake.xsd">
+	<flow name="post-employeeFlow" doc:id="b635034c-fc84-4aad-9a9a-b96bae3a2e60" >
+		<ee:transform doc:name="Transform Message" doc:id="2d270568-88bb-4dd1-bb0c-6b6e11cdfd5b">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<snowflake:insert doc:name="Insert" doc:id="20686035-ec0d-4bf6-8e57-c6a83209cb52" config-ref="Snowflake_Config">
+			<snowflake:sql ><![CDATA[INSERT INTO onboarding(EMPLOYEEID,firstname, lastName,department, jobTitle,startDate,trainingCompleted,equipmentProvided,
+managerName) values(:empId,:firstName, :lastName,:department, :jobTitle,:startDate,:trainingCompleted,:equipmentProvided,
+:managerName
+)]]></snowflake:sql>
+			<snowflake:input-parameters ><![CDATA[#[payload]]]></snowflake:input-parameters>
+		</snowflake:insert>
+		<ee:transform doc:name="Transform Message" doc:id="b0942c64-d475-4278-aeee-abeef96c5727" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

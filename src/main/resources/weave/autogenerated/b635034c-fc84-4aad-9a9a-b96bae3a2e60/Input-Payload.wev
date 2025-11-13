@@ -1,0 +1,13 @@
+%dw 2.0
+
+type auto_b635034c_fc84_4aad_9a9a_b96bae3a2e60_Input_Payload = {
+  firstName: String, 
+  lastName: String, 
+  jobTitle: String, 
+  trainingCompleted: Boolean, 
+  equipmentProvided: Boolean, 
+  managerName: String, 
+  startDate: String, 
+  _?: Any
+}
+
