@@ -116,7 +116,7 @@
                         <provider>MC</provider>
                         <environment>Sandbox</environment>
                         <target>Cloudhub-US-East-2</target>
-                        <server>anypoint-exchange-v3</server>
+                        <server>anypoint/server>
                         <applicationName>${project.artifactId}</applicationName>
                         <releaseChannel>NONE</releaseChannel>
                         <replicas>1</replicas>
