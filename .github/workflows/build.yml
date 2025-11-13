@@ -31,7 +31,7 @@ jobs:
         KEY: ${{ secrets.decryption_key }}
       run: mvn test --settings .maven/settings.xml -Dsecure.key="$KEY"
     - name: Upload MUnit reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: munit-test-reports
         path: target/site/munit/coverage/
@@ -53,7 +53,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
-        java-version: 8
+        java-version: 17
     - name: Build with Maven
       run: mvn -B package --file pom.xml -DskipMunitTests
     - name: Stamp artifact file name with commit hash
@@ -63,7 +63,7 @@ jobs:
         artifactName2=$(ls target/*.jar | head -1 | sed "s/.jar/-$commitHash.jar/g")
         mv $artifactName1 $artifactName2
     - name: Upload artifact 
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: artifacts
           path: target/*.jar
