@@ -22,11 +22,7 @@
       <username>ayyappam1125</username>
       <password>Baahulya@467</password>
     </server>
-	 <server>
-      <id>Repository</id>
-      <username>~~~Client~~~</username>
-      <password>${client.id}~?~${client.secret}</password>
-    </server>
+
   </servers>
 
   <pluginGroups>
