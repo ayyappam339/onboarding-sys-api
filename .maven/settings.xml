@@ -6,11 +6,6 @@
   </pluginGroups>
 
   <servers>
-    <server>
-      <id>MuleRepository</id>
-      <username>${nexus_username}</username>
-      <password>${nexus_password}</password>
-    </server>
       <server>
       <id>Repository</id>
       <username>ayyappam1125</username>
