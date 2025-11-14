@@ -29,50 +29,6 @@
 
     </servers>
 
-    <profiles>
-        <profile>
-            <id>mule-settings</id>
 
-            <repositories>
-                <repository>
-                    <id>anypoint-exchange-v2</id>
-                    <name>Anypoint Exchange v2</name>
-                    <url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </repository>
-                <repository>
-                    <id>anypoint-exchange-v3</id>
-                    <name>Anypoint Exchange v3</name>
-                    <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </repository>
-                <repository>
-                    <id>ca.anypoint.credentials</id>
-                    <name>Organization Maven Repo</name>
-                    <!-- Hardcode your organization ID here -->
-                    <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/YOUR_ORG_ID/maven</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </repository>
-            </repositories>
-
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>anypoint-exchange-v3</id>
-                    <name>Anypoint Exchange Plugins</name>
-                    <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
-                    <releases><enabled>true</enabled></releases>
-                    <snapshots><enabled>false</enabled></snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-
-        </profile>
-    </profiles>
-
-    <activeProfiles>
-        <activeProfile>mule-settings</activeProfile>
-    </activeProfiles>
 
 </settings>
