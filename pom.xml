@@ -7,11 +7,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ad59343a-0dd5-44ca-91ec-389a00d188e2</groupId>
-    <artifactId>emp-onboarding-system-api</artifactId>
+    <artifactId>emp-system-onboarding-api/artifactId>
     <version>1.0.0</version>
     <packaging>mule-application</packaging>
 
-    <name>emp-onboarding-system-api-app</name>
+    <name>emp-system-onboarding-api</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
