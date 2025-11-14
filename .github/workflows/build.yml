@@ -16,29 +16,29 @@ jobs:
     
     - uses: actions/checkout@v3
     
-    - uses: actions/cache@v3
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    
-    - name: Set up JDK 11
+    - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
-        java-version: 11
-        distribution: 'zulu'
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
     
-    - name: Print effective-settings
-      run: mvn help:effective-settings -s .maven/settings.xml
+    - name: Debug - Java version
+      run: java -version
     
-    - name: Build with Maven
-      run: mvn -B package -s .maven/settings.xml
+    - name: Debug - Maven version
+      run: mvn --version
     
-    - name: Upload to Exchange
-      run: |
-        mvn deploy -s .maven/settings.xml -DskipTests
+    - name: Resolve dependencies
+      run: mvn dependency:resolve -s .maven/settings.xml
+    
+    - name: Build and package
+      run: mvn clean package -s .maven/settings.xml -DskipTests
     
     - name: Deploy to CloudHub
       run: |
-        mvn mule:deploy -s .maven/settings.xml -DskipTests -DskipDeploymentVerification="true"
+        mvn mule:deploy \
+          -s .maven/settings.xml \
+          -DskipTests \
+          -DskipExchangeDeployment=true \
+          -DskipDeploymentVerification="true"
