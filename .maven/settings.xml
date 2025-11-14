@@ -1,9 +1,84 @@
-<settings>
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
     <servers>
+
+        <!-- Anypoint Exchange v2 repository -->
+        <server>
+            <id>anypoint-exchange-v2</id>
+            <username>${env.CA_CLIENT_ID}</username>
+            <password>${env.CA_CLIENT_SECRET}</password>
+        </server>
+
+        <!-- Anypoint Exchange v3 repository -->
+        <server>
+            <id>anypoint-exchange-v3</id>
+            <username>${env.CA_CLIENT_ID}</username>
+            <password>${env.CA_CLIENT_SECRET}</password>
+        </server>
+
+        <!-- Your organization repository (distributionManagement) -->
         <server>
             <id>ca.anypoint.credentials</id>
-            <username>~~~Client~~~</username>
-            <password>${CA_CLIENT_ID}~?~${CA_CLIENT_SECRET}</password>
+            <username>${env.CA_CLIENT_ID}</username>
+            <password>${env.CA_CLIENT_SECRET}</password>
         </server>
+
     </servers>
+
+    <mirrors>
+        <!-- Optional: Mirror all requests to Anypoint Exchange -->
+        <mirror>
+            <id>anypoint-exchange</id>
+            <mirrorOf>*</mirrorOf>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+        </mirror>
+    </mirrors>
+
+    <profiles>
+        <profile>
+            <id>mule-settings</id>
+            <repositories>
+                <repository>
+                    <id>anypoint-exchange-v2</id>
+                    <name>Anypoint Exchange v2</name>
+                    <url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </repository>
+                <repository>
+                    <id>anypoint-exchange-v3</id>
+                    <name>Anypoint Exchange v3</name>
+                    <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </repository>
+                <repository>
+                    <id>ca.anypoint.credentials</id>
+                    <name>Organization Maven Repo</name>
+                    <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/YOUR_ORG_ID/maven</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>anypoint-exchange-v3</id>
+                    <name>Anypoint Exchange Plugins</name>
+                    <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>false</enabled></snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>mule-settings</activeProfile>
+    </activeProfiles>
+
 </settings>
