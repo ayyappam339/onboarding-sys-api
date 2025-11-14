@@ -31,7 +31,7 @@
 			<plugin>
     <groupId>org.mule.tools.maven</groupId>
     <artifactId>exchange-mule-maven-plugin</artifactId>
-    <version>0.0.24</version> <!-- or check for latest version -->
+    <version>0.1.7</version> <!-- or check for latest version -->
 </plugin>
 
 
